@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Define variables for command outputs
+TOP_OUTPUT=$(top -b -n 1 | head -10)
+DISK_USAGE=$(df -h)
+MEMORY_USAGE=$(free -m)
+SYSTEM_UPTIME=$(uptime)
+IO_STATS=$(iostat 2>/dev/null)  # Redirect error if iostat is missing
+
+echo
+echo "Executing Administrative Tasks..."
+echo
+
+# Display system performance metrics
+echo "===== TOP PROCESSES ====="
+echo "$TOP_OUTPUT"
+echo
+
+echo "===== DISK USAGE ====="
+echo "$DISK_USAGE"
+echo
+
+echo "===== MEMORY USAGE ====="
+echo "$MEMORY_USAGE"
+echo
+
+echo "===== SYSTEM UPTIME ====="
+echo "$SYSTEM_UPTIME"
+echo
+
+echo "===== I/O STATISTICS ====="
+if command -v iostat &>/dev/null; then
+  echo "$IO_STATS"
+else
+  echo "iostat command not found. Install sysstat package to use it."
+fi
+echo
+echo "Script Execution Completed."
+
